@@ -1,4 +1,4 @@
-const FightResult = require("../model/FightResult");
+const FightResult = require("../models/FightResult");
 
 exports.createFightResult = async (req, res) => {
   const { winner, loser, point, player } = req.body;

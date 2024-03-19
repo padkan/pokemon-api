@@ -1,12 +1,11 @@
 const express = require("express");
 const api = express.Router();
 const {
-  getAllFightResult,
-  createFightResult,
-  updateFightResult,
-} = require("../controller/pokemon.controller");
+  getAllPokemon,
+  getPokemon,
+} = require("../controllers/pokemon.controller");
 
-api.route("/fight-result").get(getAllFightResult).post(createFightResult);
-api.route("/:plyer").get(updateFightResult);
+api.route("/pokemons").get(getAllPokemon);
 
+api.route("/pokemons/:id").get(getPokemon);
 module.exports = api;

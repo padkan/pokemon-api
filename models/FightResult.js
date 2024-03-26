@@ -1,12 +1,10 @@
 const mongoose = require("mongoose");
-const fightResultData = new mongoose.Schema({
-  player: String,
+const fightResultSchema = new mongoose.Schema({
   winer: String,
   loser: String,
   point: String,
-  fightNumber: Number,
 });
 
-const FightResult = mongoose.model("FightResult", fightResultData);
+const FightResult = mongoose.model("FightResult", fightResultSchema);
 
 module.exports = FightResult;

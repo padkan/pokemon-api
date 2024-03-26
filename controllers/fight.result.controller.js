@@ -1,19 +1,14 @@
 const FightResult = require("../models/FightResult");
 
 exports.createFightResult = async (req, res) => {
-  const { winner, loser, point, player } = req.body;
+  const { winer, loser, point } = req.body;
+
   try {
-    const fightResult = new FightResult({
-      player,
-      winner,
-      loser,
-      point,
-      fightNumber: 0,
-    });
-    const savedFightResult = await fightResult.create();
+    const fightResult = await FightResult.create({ winer, loser, point });
+
     res.status(201).json({
       message: "fightResult created successfully",
-      data: savedFightResult,
+      data: fightResult,
     });
   } catch (error) {
     res
@@ -25,6 +20,7 @@ exports.createFightResult = async (req, res) => {
 exports.getAllFightResult = async (req, res) => {
   try {
     const fightResult = await FightResult.find();
+    console.log("fightResult", fightResult);
     res.status(201).json({ data: fightResult });
   } catch (error) {
     res.status(500).json({ error: "An error occurred while get fightResults" });

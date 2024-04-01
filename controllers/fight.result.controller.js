@@ -1,19 +1,36 @@
 const FightResult = require("../models/FightResult");
 
 exports.createFightResult = async (req, res) => {
-  const { winer, loser, point } = req.body;
+  const { winer, loser } = req.body;
 
   try {
-    const fightResult = await FightResult.create({ winer, loser, point });
-
+    const fightResultByWiner = await FightResult.findOne({ winer });
+    let fightResult;
+    let fightResultUpdate;
+    if (fightResultByWiner == null) {
+      fightResult = await FightResult.create({ winer, loser, point: 1 });
+      fightResult = await fightResult.save();
+      //console.log("fightResult1", fightResult);
+    } else {
+      const point = Number(fightResultByWiner.point) + 1;
+      fightResultUpdate = await FightResult.findOneAndUpdate(
+        { winer },
+        { $set: { point } },
+        { new: true }
+      );
+      //console.log("fightResultUpdate", fightResultUpdate);
+    }
+    //console.log("fightResult2", fightResult);
+    const data =
+      typeof fightResult === "undefined"
+        ? { fightResultUpdate }
+        : { fightResult };
     res.status(201).json({
       message: "fightResult created successfully",
-      data: fightResult,
+      data,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "An error occurred while creating the fightResult" });
+    res.status(500).json({ error: error.message });
   }
 };
 

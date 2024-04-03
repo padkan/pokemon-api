@@ -10,7 +10,6 @@ exports.createFightResult = async (req, res) => {
     if (fightResultByWiner == null) {
       fightResult = await FightResult.create({ winer, loser, point: 1 });
       fightResult = await fightResult.save();
-      //console.log("fightResult1", fightResult);
     } else {
       const point = Number(fightResultByWiner.point) + 1;
       fightResultUpdate = await FightResult.findOneAndUpdate(
@@ -18,9 +17,7 @@ exports.createFightResult = async (req, res) => {
         { $set: { point } },
         { new: true }
       );
-      //console.log("fightResultUpdate", fightResultUpdate);
     }
-    //console.log("fightResult2", fightResult);
     const data =
       typeof fightResult === "undefined"
         ? { fightResultUpdate }

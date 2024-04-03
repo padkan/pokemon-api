@@ -33,7 +33,7 @@ exports.createFightResult = async (req, res) => {
 
 exports.getAllFightResult = async (req, res) => {
   try {
-    const fightResult = await FightResult.find();
+    const fightResult = await FightResult.find().sort({ point: -1 }).exec();
     console.log("fightResult", fightResult);
     res.status(201).json({ data: fightResult });
   } catch (error) {
